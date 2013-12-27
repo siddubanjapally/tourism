@@ -1,0 +1,87 @@
+!!! 5
+html
+    head
+        meta(name='viewport',content='width=device-width, initial-scale=1')
+        title Sikkim-tourism
+        link(href='kendo/styles/kendo.common.min.css', rel='stylesheet')
+        link(href='kendo/styles/kendo.default.min.css', rel='stylesheet')
+        link(href='kendo/styles/kendo.mobile.all.min.css', rel='stylesheet')
+        link(href='css/index.css',rel='stylesheet')
+    body
+        div#main(data-role='view',data-title='Sikkim Tourism',data-layout='header',data-model='districtModel')
+            header(data-role='header')
+                div(data-role='navbar')
+                    span(data-role='view-title')
+            div(data-role='content')
+                img#large(src='img/sombaria.jpg',width='100%',height='40%')
+                ul(data-role='listview' ,data-template="districtTemplate"  ,class='places-list' ,data-bind="source:districtDS")
+            script(type='text/x-kendo-template',id='districtTemplate')
+                a(data-role ="listview-link",href='\\#home?id=#: DistName#',class='details-link')
+                  h2(data-bind='text:DistName')
+                  img(src='img/#= DistImgpath #')
+        div#home(data-role='view',data-layout='default',data-title='Sikkim',data-show='placesDatashow')
+            ul(data-role='listview',data-bind='source:districtPlacesDS',data-template='placesTemp',data-click='placesClick')
+            script(id='placesTemp',type='text/x-kendo-template')
+                a(href='\\#description',class='details-link',data-item-id="#= PlaceName #",data-role='listview-link')
+                    img.item-photo(src='img/#=Imgpath#')
+                    h2.item-title(data-bind='text:PlaceName')
+                    p.item-info(data-bind='text:PlaceDisc')
+        div#description(data-role='view',data-layout='details',data-title='Sikkim',data-show='placeDescDatashow')
+            div(data-role='content')
+                div#desc-content(data-template='descTemp',data-bind='source:districtPlacesDS')
+                    script(type='text/x-kendo-template',id='descTemp')
+                        img(src='img/#=Imgpath#',width='100%',height='20%')
+                        div(id='panelcontent')
+                            ul(id='panelbar')
+                                li(class="k-state-active")
+                                    span(class="k-link k-state-selected") DESCRIPTION
+                                    div
+                                       p #=AboutPlace#
+                                li NEAR BY
+                                   div
+                                      p #=NearbyPlaces#
+                                li HOTELS
+                                    div
+                                        p #=PlaceDisc#
+        div#galleryview(data-role='view',data-layout='details',data-title='Gallery',data-show='galleryDatashow')
+            div(data-role='content',data-stretch="true")
+                div(data-role="scrollview",data-bind="source:galleryDS",data-template="galleryTemp",data-enable-pager="false")
+                script(id='galleryTemp',type='text/x-kendo-template')
+                    div
+                         div(class='image',style='background-image: url(img/#=Imgpath#)')
+        div#hotelsview(data-role='view',data-layout='details',data-title='Hotels',data-show='hotelsDatashow')
+            div(data-role='content')
+                div(data-bind="source:hotelsDS",data-template="hotelTemp")
+                script(id='hotelTemp',type='text/x-kendo-template')
+                    h2 #=HotelName #
+                    p #=Address#
+                    h4 #=ContactNo#
+        div(data-role='layout',data-id='default')
+            header(data-role='header')
+                div(data-role='navbar')
+                    span(data-role='view-title')
+            footer(data-role='footer')
+                div(data-role='tabstrip')
+                    a(data-icon='home',href='#main') Home
+                        div(data-role='layout',data-id='header')
+                header(data-role='header')
+                    div(data-role='navbar')
+                        span(data-role='view-title')
+        div(data-role='layout',data-id='details')
+            header(data-role='header')
+                div(data-role='navbar')
+                    span(data-role='view-title')
+            footer(data-role='footer')
+                div(data-role='tabstrip')
+                    a(data-icon='home',href='#description') Home
+                    a(data-icon='organize',href='#galleryview') Gallery
+                    a(data-icon='favorites',href='#hotelsview') Hotels
+                        script(src='phonegap.js')
+        script(src='kendo/js/jquery.min.js')
+        script(src='kendo/js/kendo.all.min.js')
+        script
+            app1 = new kendo.mobile.Application($(document.body));
+        script(src='js/data.js')
+        script(src='js/database.js')
+        script(src='js/main.js')
+                                                                            
